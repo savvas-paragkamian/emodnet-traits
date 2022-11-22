@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
 
+###############################################################################
+# script name: get_worms_traits.py
+# developed by: Savvas Paragkamian
+# framework: EMODnet Biology Phase IV
+###############################################################################
+# GOAL:
+# Aim of this script is to retrieve all available attributes from 
+# Aphia database (WoRMS) assigned to taxa.
+###############################################################################
+# usage:./get_worms_traits.py
+###############################################################################
+
 import requests, sys, json, time
 from random import uniform
 from datetime import date

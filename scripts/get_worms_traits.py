@@ -7,24 +7,16 @@ worms_url = "https://www.marinespecies.org/rest/AphiaAttributesByAphiaID/"
 
 taxa = []
 
-with open("../WoRMS_2022-04-01/taxon.txt") as file:
+with open("../worms/2022-04-01-aphia_ids.tsv") as file:
     for line in file:
         
-        columns = []
         l=line.split('\t')
-        
-        aphia_url=l[26].split('=')
-        
-        if (len(aphia_url)>1):
-            aphia_id=aphia_url[2]
-        else:
-            aphia_id=l[26]
+        taxa.append(l)
 
-        columns = [l[5], l[19], aphia_id]
-        taxa.append(columns)
+print("there are " + str(len(taxa)) + " aphia IDS")
 
 l = taxa[222]
-aphia_id = l[2]
+aphia_id = l[1]
 print(aphia_id)
 url = worms_url + aphia_id
 aphia_attr = requests.get(url = url)

@@ -69,4 +69,63 @@ To download all the worms data one has to ask explicitly the WoRMs database.
 It is not recommended to iteratively download all the database. For scientific
 purposes this is standard procudure for WoRMS.
 
+### Bulk data summary
 
+In total, WoRMS, as of 2022-04-01, has 543915 aphia IDS. The taxonomic summary is below.
+
+```
+gawk -F"\t" '(NR>1){split($27,a,"="); print $6 "\t" a[3] "\t" $20}' WoRMS_2022-04-01/taxon.txt | gawk -F"\t" '{a[$3]++}END{for (i in a) {print i "\t" a[i]}}'
+```
+
+```
+Gigaclass       2
+Subgenus        6162
+Genus   51639
+Subvariety      28
+Infrakingdom    6
+Superorder      72
+Subkingdom      15
+Supertribe      5
+Superfamily     835
+Superclass      15
+Subforma        23
+Variety 10550
+Kingdom 9
+Forma   1434
+Subfamily       2707
+Parvorder       28
+Subterclass     12
+Phylum (Division)       21
+Mutatio 1
+Natio   23
+Parvphylum      2
+Family  7174
+Subspecies      13047
+Infraclass      29
+Species 446970
+Infraorder      133
+Superphylum     1
+Subclass        230
+Tribe   327
+Class   360
+Subphylum (Subdivision) 17
+Suborder        449
+Subphylum       51
+Order   1368
+Epifamily       4
+Megaclass       1
+Subtribe        14
+Subsection      8
+Section 22
+Phylum  108
+Infraphylum     12
+```
+
+## How to use the repo
+
+This repo has submodules so in order to clone all of them use the following 
+command:
+
+```
+git clone --recurse-submodules <url>
+```

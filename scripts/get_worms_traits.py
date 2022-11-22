@@ -15,20 +15,33 @@ with open("../worms/2022-04-01-aphia_ids.tsv") as file:
 
 print("there are " + str(len(taxa)) + " aphia IDS")
 
-l = taxa[222]
-aphia_id = l[1]
-print(aphia_id)
-url = worms_url + aphia_id
-aphia_attr = requests.get(url = url)
-time.sleep(3)
-print(aphia_attr.status_code)
-data = aphia_attr.json()
-data_j = data #json.loads(data)
-print(type(data_j))
-print(type(data_j[0]))
-print(len(data_j))
+for a in taxa:
+    aphia_id = a[1]
+    url = worms_url + aphia_id
+    aphia_attr = requests.get(url = url)
+    code = aphia_attr.status_code
+    
+    time.sleep(3)
 
-jsonFile = open("data.json", "w")
-jsonString = json.dumps(data_j)
-jsonFile.write(jsonString)
-jsonFile.close()
+    if code == 204:
+        print(str(a[0]) + " " + str(aphia_id) + " return code = " + str(code))
+
+    if code == 400:
+        print(str(aphia_id) + " return code = " + str(code))
+
+    if code == 200:
+        print(str(aphia_id) + " return code = " + str(code))
+        data = aphia_attr.json()
+        data_j = data #json.loads(data)
+        print(type(data_j))
+        print(type(data_j[0]))
+        print(len(data_j))
+        
+        # load to json
+        newjson = "../worms_traits/" + "traits_" + str(aphia_id) + ".json"
+        jsonFile = open(newjson, "w")
+        jsonString = json.dumps(data_j)
+        jsonFile.write(jsonString)
+        jsonFile.close()
+
+

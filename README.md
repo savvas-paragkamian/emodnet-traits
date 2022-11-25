@@ -121,6 +121,19 @@ Phylum  108
 Infraphylum     12
 ```
 
+## Fishbase
+
+[Fishbase](https://www.fishbase.ca/search.php) is the most comprehensive database
+for fish and marine animals. It has mostly curated content that can be 
+consindered as gold standard. There is package in R that allows users to 
+download data from the database. 
+
+The species have an internal identifier called SpecCode. In the directory 
+`fishbase` there are some tables extracted from fishbase that contain species 
+traits. 
+
+WoRMS is connected to fishbase.
+
 ## How to use the repo
 
 This repo has submodules so in order to clone all of them use the following 

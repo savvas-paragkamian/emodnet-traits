@@ -25,7 +25,8 @@ library(tidyverse)
 #diet <- fb_tbl("diet")
 #diet_items <- fb_tbl("diet_items")
 #ecology <- fb_tbl("ecology")
-#taxamatch <- fb_tbl("taxamatch")
+taxamatch <- fb_tbl("taxamatch")
+species_fb <- fb_tbl("species")
 #
 #
 #write_delim(ecosystem, "../fishbase/2022-11-25-fishbase_ecosystem.tsv", delim="\t")
@@ -34,6 +35,7 @@ library(tidyverse)
 #write_delim(diet_items, "../fishbase/2022-11-25-diet_items.tsv", delim="\t")
 #write_delim(ecology, "../fishbase/2022-11-25-ecology.tsv", delim="\t")
 #write_delim(taxamatch, "../fishbase/2022-11-25-taxamatch.tsv", delim="\t")
+write_delim(species_fb, "../fishbase/2022-11-25-species_fb.tsv", delim="\t")
 
 
 

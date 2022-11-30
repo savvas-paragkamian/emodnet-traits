@@ -48,7 +48,7 @@ def aphiaid_attr_request(aphia_id):
         data = aphia_attr.json()
         return(data)
 
-    time.sleep(uniform(2,4))
+    time.sleep(uniform(1,2))
 
 def write_json_attr(attributes):
     

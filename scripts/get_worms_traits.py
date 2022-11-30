@@ -21,7 +21,20 @@ def aphiaid_attr_request(aphia_id):
 
     worms_url = "https://www.marinespecies.org/rest/AphiaAttributesByAphiaID/"
     url = worms_url + aphia_id
-    aphia_attr = requests.get(url = url)
+
+    start_time = time.time()
+    connection_timeout = 60 # seconds
+
+    while True:
+        try:
+            aphia_attr = requests.get(url = url)
+            break
+        except requests.ConnectionError:
+            if time.time() > start_time + connection_timeout:
+                raise Exception('Unable to get updates after {} seconds of ConnectionErrors'.format(connection_timeout))
+            else:
+                time.sleep(1)
+
     code = aphia_attr.status_code
 
     if code == 204:

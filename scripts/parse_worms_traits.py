@@ -12,6 +12,22 @@
 # usage:./parse_worms_traits.py
 ###############################################################################
 
-import sys, json
+import sys, json, csv
+from pandas import json_normalize
+
+filename = "../worms_traits/traits_999827.json"
+
+with open(filename, "r") as json_file:
+    trait = json.load(json_file)
 
 
+with open("output.tsv", "w") as output_file:
+    dw = csv.DictWriter(output_file, trait[0].keys(), delimiter='\t')
+    dw.writeheader()
+    dw.writerows(trait)
+
+
+df = pd.json_normalize(trait, record_path="children")
+df.head()
+print(trait[0].get("children"))
+print(trait[0].keys())

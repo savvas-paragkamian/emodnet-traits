@@ -11,23 +11,66 @@
 ###############################################################################
 # usage:./parse_worms_traits.py
 ###############################################################################
+import pandas as pd
+import json
+import os
+import sys
 
-import sys, json, csv
-from pandas import json_normalize
+directory_path = 'worms_traits/'
+print(f'loading all json files from the {directory_path}')
 
-filename = "../worms_traits/traits_999827.json"
+# Define the output TSV file path
+output_file = 'output.tsv'
+output_directory = 'worms_traits_df/'
 
-with open(filename, "r") as json_file:
-    trait = json.load(json_file)
+# start loading the files
+data_list = []
+
+for filename in os.listdir(directory_path):
+    if filename.endswith('.json'):
+        file_path = os.path.join(directory_path, filename)
+
+        # Open and read the JSON file
+        with open(file_path, 'r') as json_file:
+            data = json.load(json_file)
+
+        # Append the data to the list
+        data_list.append(data)
+
+print(f'the number of files read are : {len(data_list)}')
+dataframes = []
+
+for json_obj in data_list:
+    df = pd.json_normalize(data,
+                           record_path=['children'],
+                           meta=['AphiaID',
+                                 'AphiaID_Inherited',
+                                 'reference',
+                                 'qualitystatus',
+                                 'measurementType',
+                                 'CategoryID',
+                                 'source_id',
+                                 'measurementValue',
+                                 'measurementTypeID'])
+
+    dataframes.append(df)
 
 
-with open("output.tsv", "w") as output_file:
-    dw = csv.DictWriter(output_file, trait[0].keys(), delimiter='\t')
-    dw.writeheader()
-    dw.writerows(trait)
+# Concatenate the list of DataFrames into a single DataFrame
+combined_df = pd.concat(dataframes, ignore_index=True)
+
+# Write the combined DataFrame to a TSV file
+
+combined_df.to_csv(output_file, sep='\t', index=False)
+print(f'Data from the list of DataFrames has been written to {output_file}')
+
+# Write each DataFrame to a separate TSV file
 
 
-df = pd.json_normalize(trait, record_path="children")
-df.head()
-print(trait[0].get("children"))
-print(trait[0].keys())
+for i, df in enumerate(dataframes):
+    output_file = f"{output_directory}output_{i}.tsv"
+    df.to_csv(output_file, sep='\t', index=False)
+    print(f'DataFrame {i} has been written to {output_file}')
+
+
+

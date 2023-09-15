@@ -72,6 +72,23 @@ To download all the worms data one has to ask explicitly the WoRMs database.
 It is not recommended to iteratively download all the database. For scientific
 purposes this is standard procudure for WoRMS.
 
+There are 68 different measurment types in the Worms database that are 
+retrievable with the API. 
+
+```
+gawk -F"\t" '(NR>1 && $2=="measurementType"){a[$2"\t"$3]++}END{for (i in a){print i FS a[i]}}' worms_traits_long.tsv
+```
+
+In total the distribution of the number of attributes per Aphia id are :
+
+```
+gawk -F"\t" '(NR>1 && $2=="AphiaID"){a[$2"\t"$3]++}END{for (i in a){print i FS a[i]}}' worms_traits_long.tsv | cut -f 3 |  R -s -e 'x <- scan(file("stdin")); summary(x)'
+
+
+Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+   1.00    3.00    5.00   10.91    9.00 3083.00
+```
+
 ### Bulk data summary
 
 In total, WoRMS, as of 2022-04-01, has 543915 aphia IDS. The taxonomic summary is below.

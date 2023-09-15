@@ -4,3 +4,6 @@
 [submodule "traitdataform"]
 	path = traitdataform
 	url = https://github.com/EcologicalTraitData/traitdataform.git
+[submodule "EMODnet-Biology-feasibility-ecological-traits"]
+	path = EMODnet-Biology-feasibility-ecological-traits
+	url = https://github.com/EMODnet/EMODnet-Biology-feasibility-ecological-traits

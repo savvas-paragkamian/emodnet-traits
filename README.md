@@ -10,6 +10,9 @@ The basic componets for this study are
 * dictionary/vocabulary containing traits, their synonyms and definitions
 * tagger, to retrieve the terms from the corpus
 
+This is a companion and investigating repo of the main work done 
+in [EMODnet Phase IV traits feasibility study](https://github.com/EMODnet/EMODnet-Biology-feasibility-ecological-traits)
+
 ## Marine Species Traits
 
 The center of WoRMS (marine species) is the Aphia Database. 
@@ -120,6 +123,11 @@ Section 22
 Phylum  108
 Infraphylum     12
 ```
+
+### Download from the worms API
+
+Using the `get-worms_traits.py` we got the json files with the attributes of aphia ids. Then with the `parse_worms_traits.py` 
+we transformed all json to a single tsv file.
 
 ## Fishbase
 

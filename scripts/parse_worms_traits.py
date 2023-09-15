@@ -7,16 +7,17 @@
 ###############################################################################
 # GOAL:
 # Aim of this script is parse the json files retrieved from worms traits and 
-# create a tsv file
+# create a tsv file with fields : "i", "name","value","depth","filename"
 ###############################################################################
 # usage:./parse_worms_traits.py
 ###############################################################################
 import json
-import csv        
+import csv
 import os
 import sys
 import re
 
+# Recurcive Function to flatten the nested json
 def flatten_json(nested_json, separator='|'):
     flat_dict = {}
 
@@ -35,25 +36,19 @@ def flatten_json(nested_json, separator='|'):
     flatten(nested_json)
     return flat_dict
 
-# Example usage:
-
-#js = 'worms_traits/traits_360492.json'
-#with open(js) as json_file:
-#	data = json.load(json_file)
-
-
 directory_path = 'worms_traits/'
 print(f'loading all json files from the {directory_path}')
 
 # Define the output TSV file path
-output_file = 'output.tsv'
 output_directory = 'worms_traits_df/'
 
 # start loading the files
 #data_list = []
 
-with open('output.tsv', 'w', newline='') as f_output:
+with open('worms_traits_long.tsv', 'w', newline='') as f_output:
     tsv_output = csv.writer(f_output, delimiter='\t')
+    header = ["i", "name","value","depth","filename"]
+    tsv_output.writerow(header)
 
     for filename in os.listdir(directory_path):
         if filename.endswith('.json'):
@@ -67,15 +62,19 @@ with open('output.tsv', 'w', newline='') as f_output:
                 flat_dict = flatten_json(data)
                 
                 for i in flat_dict:
+                    # count the clildren depth of each entry
+                    depth = i.count("children")
+                    # remove the children mention
                     name = re.sub("|children|0|","",i)
                     #namea = re.sub("|{2,}", "|",name)
                     name_s = name.replace("|", '', name.count("|") - 1)
+                    #make a list of the line
                     d = name_s.split("|")
-    
+                    # append the data to the list
                     d.append(flat_dict[i])
+                    d.append(depth)
                     d.append(filename)
+                    #write the line to the file
                     tsv_output.writerow(d)
-            # Append the data to the list
-            #data_list.append(my_list)
 
 print("done")
